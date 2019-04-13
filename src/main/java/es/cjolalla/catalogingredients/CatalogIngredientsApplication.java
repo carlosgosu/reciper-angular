@@ -7,6 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //@Configure
 //@AutoConfiguration
 //@ComponentScan
+//Como esta incluido el starter-web tambien se incluye la siguiente anotacion
+//@EnableWebMvc
+//Excluimos el SecurityAutoConfiguration para poder configurar nosotros la parte de seguridad
+//@SpringBootApplication(exclude= {SecurityAutoConfiguration.class})
 @SpringBootApplication
 public class CatalogIngredientsApplication {
 
