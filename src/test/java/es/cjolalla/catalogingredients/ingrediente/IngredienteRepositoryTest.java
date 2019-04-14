@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,6 +21,7 @@ import es.cjolalla.catalogingredients.ingrediente.web.IngredienteRestController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("test")
 public class IngredienteRepositoryTest {
 	
 	@Autowired
@@ -48,6 +50,13 @@ public class IngredienteRepositoryTest {
 	public void findIngredientesPorPrecioMenor() {
 		List<Ingrediente> listaIngredientes = ingredienteRepo.findByPrecioMenor(new BigDecimal("1"));
 		Assert.assertEquals(2, listaIngredientes.size());
+	}
+	
+	@Test
+	public void findIngredientesTodos() {
+		List<Ingrediente> todos = ingredienteRepo.findAll();
+		//Para comparar BigDecimal con el AssertEquals hay un problema de precision
+		Assert.assertEquals(6,todos.size());
 	}
 
 }

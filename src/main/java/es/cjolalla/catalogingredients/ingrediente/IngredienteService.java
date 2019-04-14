@@ -7,5 +7,8 @@ public interface IngredienteService {
 	
 	Ingrediente devolverIngrediente(String nombre);
 
+	List<Ingrediente> devolverIngredientesTodos();
+	
 	List<Ingrediente> devolverIngredientesMasBaratos(BigDecimal precioTope);
+	
 }

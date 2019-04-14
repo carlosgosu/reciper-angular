@@ -1,5 +1,7 @@
 package es.cjolalla.catalogingredients.ingrediente.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,11 @@ public class IngredienteRestController {
 	@Autowired
 	public IngredienteRestController(IngredienteService ingredienteService) {
 		this.ingredienteService = ingredienteService;
+	}
+	
+	@GetMapping(value= "/ingredientes")
+	public List<Ingrediente> findByNombre() {
+		return ingredienteService.devolverIngredientesTodos();
 	}
 
 	@GetMapping(value= "/ingredientes/{nombre}")

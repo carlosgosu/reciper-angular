@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -26,6 +27,7 @@ import es.cjolalla.catalogingredients.ingrediente.web.IngredienteRestController;
 //@AutoConfigureMockMvc
 //Si en vez de la anterior le ponemos entre parentesis el controlador nos evitamos crear todo el contexto y solo creamos los controladores indicados
 @WebMvcTest(IngredienteRestController.class)
+@ActiveProfiles("test")
 public class IngredienteRestControllerTest {
 
 	@Autowired
@@ -37,6 +39,17 @@ public class IngredienteRestControllerTest {
 	
 	@Test
 	public void testEncontrarIngrediente() throws Exception{
+		
+		Mockito.when(service.devolverIngrediente("Ajo")).thenReturn(new Ingrediente("Ajo",10,new BigDecimal("1.5")));
+		
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/ingredientes/Ajo"))
+			.andExpect(MockMvcResultMatchers.status().is(200)) //Tambien valdria el metodo status().isOk() directamente
+			.andExpect(MockMvcResultMatchers.content().json("{'id':null,'nombre':'Ajo','kcal':10,'precio':1.50}"));
+	}
+	
+	
+	@Test
+	public void testDevolverTodosIngredientes() throws Exception{
 		
 		Mockito.when(service.devolverIngrediente("Ajo")).thenReturn(new Ingrediente("Ajo",10,new BigDecimal("1.5")));
 		

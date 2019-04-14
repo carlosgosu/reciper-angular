@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 @Service
@@ -19,13 +20,21 @@ public class IngredienteServiceImpl implements IngredienteService{
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<Ingrediente> devolverIngredientesMasBaratos(BigDecimal precioTope) {
 		return ingredienteRepo.findByPrecioMenor(precioTope);
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Ingrediente devolverIngrediente(String nombre) {
 		return ingredienteRepo.findByNombre(nombre);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Ingrediente> devolverIngredientesTodos() {
+		return ingredienteRepo.findAll();
 	}
 
 }
