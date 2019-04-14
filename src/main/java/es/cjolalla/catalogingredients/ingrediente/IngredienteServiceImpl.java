@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 @Service
+//Por defecto seran sin el readOnly
+@Transactional 
 public class IngredienteServiceImpl implements IngredienteService{
 
 	private final IngredienteRepository ingredienteRepo;
@@ -36,5 +38,13 @@ public class IngredienteServiceImpl implements IngredienteService{
 	public List<Ingrediente> devolverIngredientesTodos() {
 		return ingredienteRepo.findAll();
 	}
+
+	@Override
+	public Long incluirIngrediente(Ingrediente nuevo) {
+		Ingrediente creado = ingredienteRepo.save(nuevo);
+		return creado.getId();
+	}
+	
+
 
 }
