@@ -1,24 +1,24 @@
-package es.cjolalla.catalogingredients.ingrediente;
+package es.cjolalla.catalogingredients.tests.ingrediente;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import es.cjolalla.catalogingredients.ingrediente.Ingrediente;
+import es.cjolalla.catalogingredients.ingrediente.IngredienteService;
 import es.cjolalla.catalogingredients.ingrediente.web.IngredienteRestController;
 
 @RunWith(SpringRunner.class)
@@ -26,7 +26,7 @@ import es.cjolalla.catalogingredients.ingrediente.web.IngredienteRestController;
 //Esta anotacion de Spring boot permite que podamos inyectar el MockMvc para probar los controladores
 //@AutoConfigureMockMvc
 //Si en vez de la anterior le ponemos entre parentesis el controlador nos evitamos crear todo el contexto y solo creamos los controladores indicados
-@WebMvcTest(IngredienteRestController.class)
+@WebMvcTest(controllers = {IngredienteRestController.class})
 @ActiveProfiles("test")
 public class IngredienteRestControllerTest {
 
@@ -38,6 +38,7 @@ public class IngredienteRestControllerTest {
 	private IngredienteService service;
 	
 	@Test
+	@WithMockUser(username="admin",roles= {"READ_INGREDIENTES"})
 	public void testEncontrarIngrediente() throws Exception{
 		
 		Mockito.when(service.devolverIngrediente("Ajo")).thenReturn(new Ingrediente("Ajo",10,new BigDecimal("1.5")));
@@ -49,6 +50,8 @@ public class IngredienteRestControllerTest {
 	
 	
 	@Test
+	//Inyecta como si estuviera autenticado el usuario admin con el permiso (Grantedauthority indicado)
+	@WithMockUser(username="admin",authorities= {"READ_INGREDIENTES"})
 	public void testDevolverTodosIngredientes() throws Exception{
 		
 		Mockito.when(service.devolverIngrediente("Ajo")).thenReturn(new Ingrediente("Ajo",10,new BigDecimal("1.5")));

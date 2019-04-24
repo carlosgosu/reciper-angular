@@ -10,4 +10,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, String> {
 	//Cargar directamente lo que enlaza el atributo permisos de Usuario (si no se cargarian LAZY lo que daria una lazy initialization si se hace fuera de un transactional)
 	@EntityGraph(attributePaths= {"permisos"})
 	Usuario findByUsuario(String name);
+	
+	
+	@EntityGraph(value="usuario.perfilesPermisos", type = EntityGraph.EntityGraphType.LOAD)
+	Usuario findDistinctByUsuario(String name);
 }

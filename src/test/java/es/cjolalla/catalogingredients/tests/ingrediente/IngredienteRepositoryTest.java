@@ -1,4 +1,4 @@
-package es.cjolalla.catalogingredients.ingrediente;
+package es.cjolalla.catalogingredients.tests.ingrediente;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -11,16 +11,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
-import es.cjolalla.catalogingredients.ingrediente.web.IngredienteRestController;
+import es.cjolalla.catalogingredients.ingrediente.Ingrediente;
+import es.cjolalla.catalogingredients.ingrediente.IngredienteRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+//@ComponentScan("es.cjolalla.catalogingredients.tests")
+//Esto iniciliza un servlet container y para esto no me hace falta
+//@SpringBootTest
+//Esto instancia un H2 database, SQL Logging, EntityScan
+@DataJpaTest
 @ActiveProfiles("test")
 public class IngredienteRepositoryTest {
 	

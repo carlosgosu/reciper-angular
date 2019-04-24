@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan("es.cjolalla.catalogingredients.usuarios")
+@Profile("!test") //Con esto no cargamos esto si esta el perfil test activo (el problema es que el EnalbeAutoConfiguration de spring boot esta cargando igualmente spring security)
 public class SecurityCatalogConfig extends WebSecurityConfigurerAdapter{
 	
 	//Aqui no se puede hacer inyeccion por constructor  No visible constructors in class es.cjolalla.catalogingredients.security.SecurityCatalogConfig

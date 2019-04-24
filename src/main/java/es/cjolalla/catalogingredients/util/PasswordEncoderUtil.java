@@ -10,5 +10,7 @@ public class PasswordEncoderUtil {
 	      System.out.println(encoded);
 	      encoded = encoder.encode("carlosgosu");//sara's password
 	      System.out.println(encoded);
+	      encoded = encoder.encode("guest");//sara's password
+	      System.out.println(encoded);
 	  }
 }

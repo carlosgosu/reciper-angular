@@ -11,6 +11,7 @@ CREATE TABLE Usuario (
     password 	VARCHAR(256)	NOT NULL,
     email		VARCHAR(255),
     nombre		VARCHAR(255),
+    idPerfil	BIGINT,
     PRIMARY KEY (usuario)
 );
 
@@ -24,4 +25,17 @@ CREATE TABLE Usuario_Permiso (
 	usuario			VARCHAR(30)		NOT NULL,
     idPermiso   	BIGINT			NOT NULL,
     PRIMARY KEY (usuario,idPermiso)
+);
+
+CREATE TABLE Perfil (
+    idPerfil   	BIGINT			NOT NULL,
+    perfil 		VARCHAR(100)	NOT NULL,
+    PRIMARY KEY (idPerfil)
+);
+
+
+CREATE TABLE Perfil_Permiso (
+	idPerfil		BIGINT			NOT NULL,
+    idPermiso   	BIGINT			NOT NULL,
+    PRIMARY KEY (idPerfil,idPermiso)
 );

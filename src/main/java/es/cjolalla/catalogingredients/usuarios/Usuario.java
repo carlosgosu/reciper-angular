@@ -8,8 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +20,22 @@ import javax.persistence.Table;
 //@NamedEntityGraph(
 //		name="usuarioConPermisos",
 //		attributeNodes = @NamedAttributeNode("permisos"))
+//El siguiente grafo cargara con joins tambien los permisos asociados al perfil ademas de los permisos directos
+@NamedEntityGraph(
+	    name = "usuario.perfilesPermisos",
+	    attributeNodes = {
+	    		@NamedAttributeNode(value="permisos"),
+	            @NamedAttributeNode(value="perfil", subgraph = "perfiles.permisos")
+	    },
+	    subgraphs = {
+	            @NamedSubgraph(
+	                    name = "perfiles.permisos",
+	                    attributeNodes = {
+	                            @NamedAttributeNode(value = "permisos")
+	                    }
+	            )
+	    }
+	)
 public class Usuario {
 
 	@Id
@@ -35,6 +53,11 @@ public class Usuario {
 			  joinColumns = @JoinColumn(name = "usuario"), 
 			  inverseJoinColumns = @JoinColumn(name = "idPermiso"))
 	private Set<Permiso> permisos = new HashSet<>();
+	
+	//Un usuario solo puede tener un unico perfil
+	@ManyToOne
+	@JoinColumn(name="idPerfil")
+	private Perfil perfil;
 
 	public String getUsuario() {
 		return usuario;
@@ -76,4 +99,13 @@ public class Usuario {
 		this.permisos = permisos;
 	}
 
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
+	}
+
+	
 }

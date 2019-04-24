@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,8 +31,12 @@ public class IngredienteRestController {
 	}
 	
 	@GetMapping(value= "/ingredientes")
-	public List<Ingrediente> findByNombre() {
+	@PreAuthorize("hasRole('ADMIN') or hasAuthority('READ_INGREDIENTES')")
+	public List<Ingrediente> findByNombre(Authentication authentication) {
+		//Para imprimir todos los permisos que tiene (y el perfil que tambien es una granted authority)
+		//logger.info(authentication.getAuthorities().stream().map(auth -> auth.getAuthority()).collect(Collectors.joining(", ","{","}")));
 		return ingredienteService.devolverIngredientesTodos();
+		
 	}
 
 	@GetMapping(value= "/ingredientes/{nombre}")
