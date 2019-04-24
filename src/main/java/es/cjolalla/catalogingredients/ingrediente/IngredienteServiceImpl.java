@@ -44,7 +44,17 @@ public class IngredienteServiceImpl implements IngredienteService{
 		Ingrediente creado = ingredienteRepo.save(nuevo);
 		return creado.getId();
 	}
-	
 
+	@Override
+	public Ingrediente actualizarIngrediente(Ingrediente actualizado) {
+		if (actualizado.getId() != null) {
+			//El getOne devuelve solo un proxy para ver si existe en vez de ir a la BD y traer toda la entidad
+			Ingrediente ing = ingredienteRepo.getOne(actualizado.getId());
+			if (ing != null) {
+				return ingredienteRepo.save(actualizado);
+			}
+		}
+		return null;
+	}
 
 }

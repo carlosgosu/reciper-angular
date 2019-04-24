@@ -12,4 +12,6 @@ public interface IngredienteService {
 	List<Ingrediente> devolverIngredientesMasBaratos(BigDecimal precioTope);
 	
 	Long incluirIngrediente(Ingrediente nuevo);
+	
+	Ingrediente actualizarIngrediente(Ingrediente actualizado);
 }

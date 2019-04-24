@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,5 +49,11 @@ public class IngredienteRestController {
 	public Long incluirIngrediente(@RequestBody Ingrediente ingrediente) {
 		logger.info(ingrediente.getNombre());
 		return ingredienteService.incluirIngrediente(ingrediente);
+	}
+	
+	@PutMapping("/ingredientes/{id}")
+	public Ingrediente actualizarIngrediente(@RequestBody Ingrediente ingrediente, @PathVariable("id") Long id) {
+		ingrediente.setId(id);
+		return ingredienteService.actualizarIngrediente(ingrediente);
 	}
 }

@@ -1,5 +1,6 @@
 CREATE TABLE Ingrediente (
     id   		BIGINT			NOT NULL AUTO_INCREMENT,
+    version		BIGINT,
     nombre 		VARCHAR(128)	NOT NULL,
     kcal		INTEGER,
     precio		DECIMAL(8,2),
