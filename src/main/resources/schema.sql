@@ -1,10 +1,37 @@
+CREATE TABLE Revision_INFO (
+    id   				BIGINT			NOT NULL AUTO_INCREMENT,
+    revision_time		TIMESTAMP,
+    ip	 				VARCHAR(30),
+    session_id			VARCHAR(255),
+    revision_user_name	VARCHAR(30),
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE familiaAlimento (
+    id   				BIGINT			NOT NULL AUTO_INCREMENT,
+    nombreFamilia		VARCHAR(70),
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE Ingrediente (
     id   		BIGINT			NOT NULL AUTO_INCREMENT,
-    version		BIGINT,
+    version		BIGINT default 0,
     nombre 		VARCHAR(128)	NOT NULL,
     kcal		INTEGER,
     precio		DECIMAL(8,2),
-    PRIMARY KEY (id)
+    idFamilia	BIGINT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (idFamilia) REFERENCES familiaAlimento(id)
+);
+
+CREATE TABLE Ingrediente_AUD (
+    id   		BIGINT			NOT NULL,
+    rev			BIGINT			NOT NULL,
+    revtype		TINYINT,
+    nombre 		VARCHAR(128)	NOT NULL,
+    kcal		INTEGER,
+    precio		DECIMAL(8,2),
+    PRIMARY KEY (id,rev)
 );
 
 CREATE TABLE Usuario (

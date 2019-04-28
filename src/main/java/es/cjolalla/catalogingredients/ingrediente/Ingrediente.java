@@ -5,15 +5,20 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
+
+import es.cjolalla.catalogingredients.familiaalimento.FamiliaAlimento;
 
 /**
  * 
@@ -42,6 +47,10 @@ public class Ingrediente implements Serializable{
 	private Integer kcal;
 	private BigDecimal precio;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idFamilia", referencedColumnName="id")
+	private FamiliaAlimento familia;
+	
 	//Optimistic locking https://www.byteslounge.com/tutorials/jpa-entity-versioning-version-and-optimistic-locking
 	@Version
 	private Integer version;
@@ -55,6 +64,14 @@ public class Ingrediente implements Serializable{
 		this.nombre = nombre;
 		this.kcal = kcal;
 		this.precio = precio;
+	}
+	
+	public Ingrediente(String nombre, Integer kcal, BigDecimal precio, FamiliaAlimento familia) {
+		super();
+		this.nombre = nombre;
+		this.kcal = kcal;
+		this.precio = precio;
+		this.familia = familia;
 	}
 
 	public Long getId() {
@@ -89,4 +106,13 @@ public class Ingrediente implements Serializable{
 		this.precio = precio;
 	}
 
+	public FamiliaAlimento getFamilia() {
+		return familia;
+	}
+
+	public void setFamilia(FamiliaAlimento familia) {
+		this.familia = familia;
+	}
+
+	
 }

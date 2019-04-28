@@ -1,8 +1,16 @@
 --Este fichero se carga automaticamente cuando arranca spring boot
-INSERT INTO Ingrediente(id,nombre,kcal,precio) VALUES
-(100,'Puerro',30,2.25),
-(101,'Cordero',250,15),
-(102,'Pollo',150,7.99);
+INSERT INTO familiaAlimento(id,nombreFamilia) VALUES
+(1,'Carne'),
+(2,'Verdura'),
+(3,'Pescado');
+
+
+INSERT INTO Ingrediente(id,nombre,kcal,precio, idFamilia) VALUES
+(100,'Puerro',30,2.25,2),
+(101,'Cordero',250,15,1),
+(102,'Pollo',150,7.99,1),
+(103,'Pavo',120,6.95,1),
+(104,'Merluza',100,11.25,3);
 
 INSERT INTO Perfil(idPerfil,perfil) VALUES
 (1,'ADMIN'),

@@ -15,6 +15,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import es.cjolalla.catalogingredients.familiaalimento.FamiliaAlimento;
+import es.cjolalla.catalogingredients.familiaalimento.FamiliaAlimentoRepository;
 import es.cjolalla.catalogingredients.ingrediente.Ingrediente;
 import es.cjolalla.catalogingredients.ingrediente.IngredienteRepository;
 
@@ -29,12 +31,19 @@ public class IngredienteRepositoryTest {
 	
 	@Autowired
 	private IngredienteRepository ingredienteRepo;
+	
+	@Autowired
+	private FamiliaAlimentoRepository familiaAlimentoRepo;
 
 	@Before
 	public void setUp() {
-		ingredienteRepo.save(new Ingrediente("Ajo",10,new BigDecimal("1.5", new MathContext(6,RoundingMode.HALF_DOWN))));
-		ingredienteRepo.save(new Ingrediente("Agua",0,new BigDecimal("0")));
-		ingredienteRepo.save(new Ingrediente("Cebolla",10,new BigDecimal("1")));
+		FamiliaAlimento carne = familiaAlimentoRepo.save(new FamiliaAlimento("Carne"));
+		FamiliaAlimento verdura = familiaAlimentoRepo.save(new FamiliaAlimento("Verdura"));
+		FamiliaAlimento pescado = familiaAlimentoRepo.save(new FamiliaAlimento("Pesacado"));
+		
+		ingredienteRepo.save(new Ingrediente("Ajo",10,new BigDecimal("1.5", new MathContext(6,RoundingMode.HALF_DOWN)), verdura));
+		ingredienteRepo.save(new Ingrediente("Agua",0,new BigDecimal("0"),null));
+		ingredienteRepo.save(new Ingrediente("Cebolla",10,new BigDecimal("1"),verdura));
 	}
 	
 	@After
@@ -59,7 +68,7 @@ public class IngredienteRepositoryTest {
 	public void findIngredientesTodos() {
 		List<Ingrediente> todos = ingredienteRepo.findAll();
 		//Para comparar BigDecimal con el AssertEquals hay un problema de precision
-		Assert.assertEquals(6,todos.size());
+		Assert.assertEquals(3,todos.size());
 	}
 
 }

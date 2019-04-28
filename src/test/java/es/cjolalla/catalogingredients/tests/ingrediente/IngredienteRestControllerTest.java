@@ -7,9 +7,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,14 +19,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import es.cjolalla.catalogingredients.ingrediente.Ingrediente;
 import es.cjolalla.catalogingredients.ingrediente.IngredienteService;
-import es.cjolalla.catalogingredients.ingrediente.web.IngredienteRestController;
 
 @RunWith(SpringRunner.class)
-//@SpringBootTest Esta anotacion no puede ir si ya va @WebMvcTest
+@SpringBootTest //Esta anotacion no puede ir si ya va @WebMvcTest
 //Esta anotacion de Spring boot permite que podamos inyectar el MockMvc para probar los controladores
-//@AutoConfigureMockMvc
+@AutoConfigureMockMvc
 //Si en vez de la anterior le ponemos entre parentesis el controlador nos evitamos crear todo el contexto y solo creamos los controladores indicados
-@WebMvcTest(controllers = {IngredienteRestController.class})
+//@WebMvcTest(controllers = {IngredienteRestControllerFake.class}) //Si le pongo solo esta en vez de SpringBootTest y AutoConfigureMockMvc no me carga los repositories y falla
 @ActiveProfiles("test")
 public class IngredienteRestControllerTest {
 
