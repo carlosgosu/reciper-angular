@@ -1,2 +1,2 @@
-# reciper
-Project to register and find recipes
+# reciper-angular
+Reciper con UI con Angular 8
